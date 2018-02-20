@@ -129,8 +129,10 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     var node = (document.getElementById('payment_final').textContent)*100;
+	
+// enter key provided by razor pay
 var options = {
-    "key": "rzp_test_hepZ4mRxThxB1q",
+    "key": "################",
     "amount": node, // 2000 paise = INR 20
     "name": "Test",
     "description": "Purchase Description",
