@@ -21,5 +21,6 @@ from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^',include('store.urls',namespace='store')),
+    url(r'^login/',include('loginapp.urls',namespace='login')),
 ]+ static(settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT)

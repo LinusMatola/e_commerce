@@ -3,11 +3,11 @@
 <head>
     <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
         {% load staticfiles %}
-    <script src="{% static 'jquery-3.2.1.min.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-theme.min.css' %}">
-    <script src="{% static 'bootstrap.min.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'font-awesome.css' %}">
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
     <title>E_COM</title>
     <style>
 
@@ -341,14 +341,14 @@ body{
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">E_COM</a>
+                <a class="navbar-brand" href="/">E_COM</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!--<li class="active"><a href="#">Home</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="cart/1"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+                    <li><a href="cart/"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -382,7 +382,7 @@ body{
                     <div class="product-info smart-form">
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="javascript:void(0);" onclick="addtocart(1,{{i.p_id}})" class="btn btn-danger">Add
+                                <a href="javascript:void(0);" onclick="addtocart({{i.p_id}})" class="btn btn-danger">Add
                                     to cart</a>
                                 <a href="product/{{i.p_id}}" class="btn btn-info">More info</a>
                             </div>
@@ -396,28 +396,33 @@ body{
     {% endfor %}
 </div>
 <script>
-    function addtocart(a,b) {
-    console.log("adsads");
-    $.ajax({
-        type: "POST",
-        url: '{% url "store:tocart" %}',
-        data: {
-          'cust_id': a,
-          'product_id': b
-        },
-        dataType: 'json',
-        success: function(data) {
-        var element = document.getElementById('hideMe')
-        element.style.display = 'block';
-            console.log(data);
-           setTimeout(function() {
-                $('#hideMe').fadeOut('fast');
-           }, 2000);
-        },
-        error: function(xhr, textStatus, errorThrown) {
-            alert("Please report this error: "+errorThrown+xhr.status+xhr.responseText);
-        }
-    });
+function addtocart(b) {
+    var foo = typeof {{request.user.pk}};
+    if (foo == 'number'){
+        $.ajax({
+            type: "POST",
+            url: '{% url "store:tocart" %}',
+            data: {
+              'product_id': b
+            },
+            dataType: 'json',
+            success: function(data) {
+            var element = document.getElementById('hideMe')
+            element.style.display = 'block';
+                console.log(data);
+               setTimeout(function() {
+                    $('#hideMe').fadeOut('fast');
+               }, 2000);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log("nope");
+                //alert("Please report this error: "+errorThrown+xhr.status+xhr.responseText);
+            }
+        });
+    }
+    else{
+        window.location.href = "/login/"
+    }
 }
 
 </script>

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'loginapp',
     'store',
 ]
 
@@ -103,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdeW0EUAAAAAGriv4lvusTpSKALSNLJx9BIIRA_'
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

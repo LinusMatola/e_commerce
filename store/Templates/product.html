@@ -4,7 +4,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>eCommerce Product Detail</title>
+    <title>E_COM</title>
     <script
             src="http://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -187,7 +187,14 @@ img {
 <body>
 
 <div class="container">
-        <nav class="navbar navbar-default">
+    <div style="display:none;  " id="hideMe" style="margin-bottom:0px;" class="panel panel-default">
+        <div style="padding: 0px;" class="panel-body">
+            <div style="margin-bottom: 0px;" class="alert alert-success" role="alert">
+                Successfully added to cart.
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -197,14 +204,14 @@ img {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/1">E_COM</a>
+                <a class="navbar-brand" href="/">E_COM</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!--<li class="active"><a href="#">Home</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/cart/1"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+                    <li><a href="/cart/"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -224,7 +231,7 @@ img {
                     <p class="product-description">{{obj.detail}}</p>
                     <h4 class="price">price: <span>₹ {{obj.price}}</span></h4>
                     <div class="action">
-                        <button onclick="addtocart(1,{{obj.p_id}})" class="add-to-cart btn btn-default" type="button">add to cart</button>
+                        <button onclick="addtocart({{obj.p_id}})" class="add-to-cart btn btn-default" type="button">add to cart</button>
 
                     </div>
                 </div>
@@ -233,21 +240,25 @@ img {
     </div>
 </div>
 <script>
-    function addtocart(a,b) {
-    console.log(a,b);
+    function addtocart(b) {
+
     $.ajax({
         type: "POST",
         url: '{% url "store:tocart" %}',
         data: {
-          'cust_id': a,
           'product_id': b
         },
         dataType: 'json',
         success: function(data) {
-            console.log(data);
+            console.log("adad");
+            var element = document.getElementById('hideMe')
+            element.style.display = 'block';
+            setTimeout(function() {
+                $('#hideMe').fadeOut('fast');
+            }, 2000);
         },
         error: function(xhr, textStatus, errorThrown) {
-            alert("Please report this error: "+errorThrown+xhr.status+xhr.responseText);
+            alert("Please report this error");
         }
     });
 }

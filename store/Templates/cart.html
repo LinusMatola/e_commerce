@@ -66,7 +66,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/1">E_COM</a>
+                <a class="navbar-brand" href="/">E_COM</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -113,7 +113,7 @@
             <td class="text-center"><strong>Total ₹ {{total}}</strong></td>
         </tr>
         <tr>
-            <td><a href="/1" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+            <td><a href="/store/{{request.user.pk}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong>Total ₹ {{total}}</strong></td>
             <td><button id="rzp-button1" class="btn btn-success btn-block">Checkout<i class="fa fa-angle-right"></i></button></td>
@@ -185,7 +185,7 @@ document.getElementById('rzp-button1').onclick = function(e){
         },
         dataType: 'json',
         success: function(data) {
-            window.location.href = "/cart/1";
+            window.location.href = "/cart/";
         },
         error: function(xhr, textStatus, errorThrown) {
             alert("Please report this error: "+errorThrown+xhr.status+xhr.responseText);

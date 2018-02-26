@@ -11,10 +11,14 @@ from django.contrib import messages
 
 # Create your views here.
 def login(request):
-    return render(request, 'login.html')
+    if 'next' in request.GET:
+        next_page = request.GET['next']
+        return render(request,'login.html', {'next_page': next_page})
+    else:
+        return render(request, 'login.html')
 
 def index(request):
-    return redirect('blog:index')
+    return redirect('store:store_home')
 def invalid(request):
     error = "a"
     return render(request, 'login.html', {'error': error})
@@ -22,8 +26,10 @@ def invalid(request):
 def home(request):
     if request.user.is_authenticated():
         return index(request)
+        #return HttpResponse("hmmm")
     else:
         return login(request)
+
 def signup(request):
     if request.method == 'POST':
         form = regform(request.POST)
@@ -55,29 +61,33 @@ def signup(request):
                 a
                 obj = userinfo(user=a,firstname=firstname,lastname=lastname,profile_pic=img)
                 obj.save()
+                return redirect('login:home')
             else:
                 #messages.error(request, 'Invalid reCAPTCHA. Please try again.')
                 err = "Invalid Captcha"
                 return render(request, 'register.html', {'err': err})
-
-            return redirect('loginapp:home')
         else:
             err = form.errors
             return render(request, 'register.html', {'err': err})
     else:
         form=regform()
         return render(request,'register.html')
-    return render(request, 'register.html')
+#    return render(request, 'register.html')
 
 def auth_view(request):
     username=request.POST['username']
     password=request.POST['password']
     user=auth.authenticate(username=username,password=password)
     if user is not None:
-        auth.login(request,user)
-        return redirect('loginapp:home')
+        if 'next' in request.POST:
+            nextp = request.POST['next']
+            auth.login(request,user)
+            return redirect(nextp)
+        else:
+            auth.login(request, user)
+            return index(request)
     else:
-        return redirect('loginapp:invalid')
+        return redirect('login:invalid')
 
 def logout(request):
     auth.logout(request)
