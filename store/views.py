@@ -5,7 +5,9 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import razorpay
-client = razorpay.Client(auth=("rzp_test_hepZ4mRxThxB1q", "nEo0pUYjlMLJvTFBNis6Pn90"))
+
+# enter the auth id and password provided by razorpay.
+client = razorpay.Client(auth=("#########################", "##########################"))
 
 client.set_app_details({"title" : "Learning", "version" : "1.8"})
 
